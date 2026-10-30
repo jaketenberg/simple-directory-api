@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,15 +21,13 @@ public class UserController {
     }
 
     @PostMapping("/environments/{environmentId}/users")
-    public ResponseEntity<Object> createUser(@RequestAttribute(ClientTypeInterceptor.CLIENT_TYPE_ATTRIBUTE) ClientType clientType,
-                                             @PathVariable String environmentId, @RequestBody User user) {
+    public ResponseEntity<Object> createUser(@PathVariable String environmentId, @RequestBody User user) {
         User created = userService.createUser(environmentId, user);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
     @GetMapping("/environments/{environmentId}/users/{userId}")
-    public ResponseEntity<Object> getUser(@RequestAttribute(ClientTypeInterceptor.CLIENT_TYPE_ATTRIBUTE) ClientType clientType,
-                                          @PathVariable String environmentId, @PathVariable String userId) {
+    public ResponseEntity<Object> getUser(@PathVariable String environmentId, @PathVariable String userId) {
         User user = userService.getUser(environmentId, userId);
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -39,8 +36,7 @@ public class UserController {
     }
 
     @PatchMapping("/environments/{environmentId}/users/{userId}")
-    public ResponseEntity<Object> updateUser(@RequestAttribute(ClientTypeInterceptor.CLIENT_TYPE_ATTRIBUTE) ClientType clientType,
-                                             @PathVariable String environmentId, @PathVariable String userId,
+    public ResponseEntity<Object> updateUser(@PathVariable String environmentId, @PathVariable String userId,
                                              @RequestBody User update) {
         User updated = userService.updateUser(environmentId, userId, update);
         if (updated == null) {
@@ -50,8 +46,7 @@ public class UserController {
     }
 
     @DeleteMapping("/environments/{environmentId}/users/{userId}")
-    public ResponseEntity<Object> deleteUser(@RequestAttribute(ClientTypeInterceptor.CLIENT_TYPE_ATTRIBUTE) ClientType clientType,
-                                             @PathVariable String environmentId, @PathVariable String userId) {
+    public ResponseEntity<Object> deleteUser(@PathVariable String environmentId, @PathVariable String userId) {
         userService.deleteUser(environmentId, userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }

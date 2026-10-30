@@ -6,7 +6,6 @@ public class User {
 
     public String username;
 
-    // read-restricted and write-restricted for limited clients
     public String email;
 
     public String givenName;
@@ -19,7 +18,6 @@ public class User {
 
     public String populationId;
 
-    // write-restricted for limited clients
     public Boolean enabled;
 
     public String type;
